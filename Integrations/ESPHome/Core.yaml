@@ -5,6 +5,8 @@ substitutions:
   ota_stable_manifest: "${stable_manifest_base}/firmware/manifest.json"
   ota_beta_manifest: "${beta_manifest_base}/manifest.json"
   bluetooth_proxy_restore_mode: RESTORE_DEFAULT_OFF
+  # Vittil (https://vittil.io): the project key from Settings in the Vittil app, yours to set.
+  vittil_project_key: ecr_your_project_key
 
 
 packages:
@@ -116,6 +118,17 @@ ota:
 
 safe_mode:
   id: safe_mode_1
+
+# Vittil: crash reports from ESP32 devices in the field (https://vittil.io).
+# When the device crashes, the full coredump uploads on the next boot and is
+# decoded against this build's ELF: cause, backtrace with file and line, the
+# task, registers and the last log lines. One external component, one key.
+external_components:
+  - source: github://vittil-io/vittil
+    components: [vittil]
+
+vittil:
+  project_key: ${vittil_project_key}
 
 logger:
   id: logger_1
